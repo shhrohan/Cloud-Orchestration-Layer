@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html><head>
+<title>HTML KickStart Elements</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="" />
+<link rel="stylesheet" type="text/css" href="css/kickstart.css" media="all" />                  <!-- KICKSTART -->
+<link rel="stylesheet" type="text/css" href="style.css" media="all" />                          <!-- CUSTOM STYLES -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/kickstart.js"></script>                                  <!-- KICKSTART -->
+<script type="text/javascript" src="js/RequestHandler.js"></script>
+</head><body>
+
+<div class="grid">
+
+<!-- ===================================== END HEADER ===================================== -->
+
+	<center><h1>Cloud Orchestration Layer </h1></center>
+	<div id="error_prompt"  style="display:none" class="notice error">
+		<i class="icon-remove-sign icon-large"></i> 
+		<span id="error_message"></span>
+		<a class="icon-remove" href="#close"></a>
+	</div>
+	<div id="success_prompt" style="display:none" class="notice success">
+		<i class="icon-ok icon-large"></i>
+		<span id="success_message"></span>
+		<a class="icon-remove" href="#close"></a>
+	</div>
+	
+	<!-- Tabs Left -->
+	<ul class="tabs left">
+	  <li class="current"><a href="#tabr1">Phase 1</a></li>
+	  <li class=""><a href="#tabr2">Phase 2</a></li>
+	</ul>
+	
+	
+	
+	<div style="display: block;" id="tabr1" class="tab-content"><h4>Manage Virtual Machines</h4>
+	
+	
+	<!-- Tabs Left -->
+		<ul class="tabs left">
+			<li class="current"><a href="#tabr11">Create</a></li>
+			<li class=""><a href="#tabr12">Query</a></li>
+			<li class=""><a href="#tabr13">Destroy</a></li>
+			<li class=""><a href="#tabr14">Images</a></li> 
+			<li class=""><a href="#tabr15">VM Types</a></li>
+		</ul>
+	
+	<div style="display: block;" id="tabr11" class="tab-content">
+		<form class="vertical">
+			<div class="col_4 column">
+				<label for="text1">Name<span class="right">A-Z, 0-9</span></label>
+				<input type="text" placeholder="give VM a name" id="vm_name">
+				
+				<label for="text1">Type<span class="right">0-9</span></label>
+				<input type="text" placeholder="give vm type id" id="vm_type">
+				
+				<label for="text1">Image<span class="right">0-9</span></label>
+				<input type="text" placeholder="give vm image id" id="vm_image">
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<label>	<span class="right"><button onclick="createVM()" class="large blue pill" type="submit"><i class="icon-cloud"></i><br/>Create VM </button></span></label>							
+			</div>
+		</form>
+	</div>
+	<div style="display: none;" id="tabr12" class="tab-content">
+		<form class="vertical">
+			<div class="col_4 column">
+				<label for="text1">Virtual Machine ID</label>
+				<input type="text" placeholder="enter VM ID to query" id="q_vm_id">
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<label>	<span class="right"><button onclick="queryVM()" class="large blue pill" type="submit"><i class="icon-cloud"></i><br/>Query VM </button></span></label>							
+			</div>
+			
+			<div id="q_error" style="display:none" class="notice error col_4">
+					No such vm exists
+			</div>
+			<div id="q_success" style="display:none"  class="notice success col_4" >
+				<i class="icon-large"></i> 
+					<span>
+						<label id="q_vmid" for="text1">Virtual Machine ID : </label>
+						<label id="q_name" for="text2">Name : </label>
+						<label id="q_type" for="text3">Type : </label>
+						<label id="q_pmid" for="text4">Physical Machine ID : </label>
+					</span>
+				<a class="icon-remove" href="#close"></a>
+			</div>
+		</form>
+	</div>
+	<div style="display: none;" id="tabr13" class="tab-content">
+		<form class="vertical">
+			<div class="col_4 column">
+				<label for="text1">Virtual Machine ID</label>
+				<input type="text" placeholder="enter VM ID to destroy" id="d_vm_id">
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<label>	<span class="right"><button onclick="destroyVM()" class="large red pill" type="submit"><i class="icon-cloud"></i><br/>Destroy VM</button></span></label>							
+			</div>
+		</form>
+	</div>
+	<div style="display: none;" id="tabr14" class="tab-content">
+		<form class="vertical">
+			<div class="col_4 column">
+				<button class="large orange" type="submit"><i class="icon-cloud"></i><br/>Show Avaliable VM Images </button>							
+			</div>
+		</form>
+		
+	</div>
+	<div style="display: none;" id="tabr15" class="tab-content">
+		<form class="vertical">
+			<div class="col_4 column">
+				<button class="large orange" type="submit"><i class="icon-cloud"></i><br/>Show Avaliable VM Types </button>							
+			</div>
+		</form>
+	</div>
+	
+		
+	</div>
+	<div style="display: none;" id="tabr2" class="tab-content"><h4>Manage Storage</h4>
+	   <!-- Tabs Left -->
+		<ul class="tabs left">
+			<li class="current"><a href="#tabr21">Create</a></li>
+			<li class=""><a href="#tabr22">Query</a></li>
+			<li class=""><a href="#tabr23">Attach</a></li>
+			<li class=""><a href="#tabr24">Detach</a></li> 
+			<li class=""><a href="#tabr25">Destroy</a></li>
+
+		</ul>
+	<div style="display: none;" id="tabr21" class="tab-content">
+	  <form class="vertical">
+	    <div class="col_4 column">
+		<label for="text1">Name<span class="right">A-Z, 0-9</span></label>
+		<input type="text" placeholder="Give hard disk a name" id="storage_name">
+		
+		<label for="text1">Size<span class="right">0-9</span></label>
+		<input type="text" placeholder="Enter space requirement" id="storage_size">
+		
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
+		<label>	
+		     <span class="right"><button onclick="createStorage()" class="large blue pill" type="submit">
+			  <i class="icon-cloud"></i>
+			  <br/>Create Storage </button>
+		     </span>
+		</label>							
+	    </div>
+	  </form>
+	</div>
+	<div style="display: none;" id="tabr22" class="tab-content">
+	 <form class="vertical">
+	    <div class="col_4 column">
+		    <label for="text1">Storage Disk ID</label>
+		    <input type="text" placeholder="enter Storage Disk ID to query" id="q_st_id">
+		    <div>&nbsp;</div>
+		    <div>&nbsp;</div>
+		    <div>&nbsp;</div>
+		    <label>	
+		      <span class="right">
+			<button onclick="queryST()" class="large blue pill" type="submit">
+			  <i class="icon-cloud"></i>
+			  <br/>
+			  Query VM 
+			</button>
+		      </span>
+		    </label>							
+	    </div>
+	    
+	    <div id="q_st_error" style="display:none" class="notice error col_4">
+		No such Storage exists
+	    </div>
+	    <div id="q_st_success" style="display:none"  class="notice success col_4" >
+		<i class="icon-large"></i> 
+		    <span>
+			<label id="q_st_id_q" for="text1">ID : </label>
+			<label id="q_st_name" for="text2">Name : </label>
+			<label id="q_st_size" for="text2">Size : </label>
+			<label id="q_st_status" for="text3">Status : </label>
+			<label id="q_st_vm_id" for="text4">Virtual Machine ID : </label>
+		    </span>
+		  <a class="icon-remove" href="#close"></a>
+	    </div>
+	  </form>
+      </div>
+	<div style="display: none;" id="tabr23" class="tab-content">
+	  Attach Form
+	</div>
+	<div style="display: none;" id="tabr24" class="tab-content">
+	  Detach Form 
+	</div>
+	<div style="display: none;" id="tabr25" class="tab-content">
+	  Destroy Form
+	</div>
+	
+	</div>
+		<!-- 
+		
+			ADD YOUR HTML ELEMENTS HERE
+			
+			Example: 2 Columns
+		 -->
+	
+		<div class="col_12 column" style="margin-top:100px;">
+		<h1 class="center">
+		<p><i class="icon-fire"></i></p>
+		This example is blank</h1>
+		<h4 style="color:#999;margin-bottom:40px;" class="center">Add some HTML KickStart Elements to see the magic happen</h4>
+		</div>
+	
+	<!-- ===================================== START FOOTER ===================================== -->
+	</div><!-- END GRID-->
+
+  </body>
+</html>
+				  
+			  
+		  
+	  

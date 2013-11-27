@@ -1,0 +1,58 @@
+<disk type='file' device='cdrom'>
+	<driver name='file' type='raw'/>
+	<source file='/opt/diskimages/test7.iso'/>
+	<target dev='hdc' bus='ide'/>
+	<readonly/>
+</disk>
+
+eject.xml contains:
+<disk type='block' device='cdrom'>
+	<driver name='file'/>
+	<target dev='hdc' bus='ide'/>
+	<readonly/>
+</disk> 
+
+
+https://bugs.launchpad.net/ubuntu/+source/qemu-kvm/+bug/897750
+
+
+First of all, you should avoid using virsh attach-disk with its limited amount of options. Instead, I suggest to specify the exact disk format you prefer in a separate, temporary XML file, like this:
+
+<disk type='file' device='disk'>
+  <driver name='qemu' type='qcow2' cache='writeback'/>
+  <source file='/home/gert/kvm/testdomain-vdb.img'/>
+  <target dev='vdb' bus='virtio'/>
+</disk>
+Before adding it, make sure the hotplug kernel modules are loaded in the guest:
+
+modprobe acpiphp
+modprobe pci_hotplug
+Some distributions, including recent CentOS/RHEL/Fedora have this built-in in the kernel. In this case, check for CONFIG_HOTPLUG_PCI_ACPI. If it's y, then you're all set.
+
+Finally, add it to the running VM using
+
+auth aupported = cephx
+
+
+virsh # attach-device [domain] /path/to/disk.xml
+(optionally, add the --persistent option to let Libvirt update the domain XML definition 'persistent'.)
+
+In the guest, the kernel should now be triggered, as can be checked with dmesg:
+
+[  321.946440] virtio-pci 0000:00:06.0: using default PCI settings
+[...]
+[  321.952782]  vdb: vdb1 vdb2
+This also works perfectly using the GUI-enabled virt-manager application.
+
+See also:
+
+Linux-KVM wiki - Using PCI Hotplug Support
+similar question "Adding Virtio block devices at runtime in Libvirt KVM"
+
+
+root@Rohan-Vaio:~/ceph-cluster# sudo rbd map test --pool rbd --name client.admin -k ceph.client.admin.keyring
+
+
+
+
+

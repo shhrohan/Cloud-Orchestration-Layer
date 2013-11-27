@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/home/rohan/workspace/MiniProject/Jars/jna.jar"/>
+	<classpathentry kind="lib" path="/home/rohan/workspace/MiniProject/Jars/libvirt-0.4.7.jar"/>
+	<classpathentry kind="lib" path="/home/rohan/workspace/MiniProject/Jars/jdom-2.0.5/jdom-2.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/rohan/workspace/MiniProject/Jars/jetty-all-7.0.2.v20100331.jar"/>
+	<classpathentry kind="lib" path="/home/rohan/workspace/MiniProject/Jars/json-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/rohan/workspace/MiniProject/Jars/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="Jars/jsch-0.1.50.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
